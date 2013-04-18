@@ -1,0 +1,29 @@
+{
+  "name": "grunt-asset-pipeline",
+  "version": "0.0.1",
+  "description": "Builds production UI artifacts from a complex asset pipeline",
+  "main": "Gruntfile.js",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Causata/grunt-asset-pipeline"
+  },
+  "contributors": [
+    {
+      "name": "Matt Goldspink",
+      "email": "mattgoldspink1@gmail.com",
+      "url": "http://www.mattgoldspink.co.uk/"
+    }
+  ],
+  "author": {
+    "name": "Richard Marr",
+    "email": "richard.marr@gmail.com"
+  },
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "devDependencies": {
+    "grunt": "~0.4.1"
+  }
+}
