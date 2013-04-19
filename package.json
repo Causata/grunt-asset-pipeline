@@ -30,6 +30,12 @@
     "grunt-contrib-concat": "~0.2.0",
     "grunt-contrib-nodeunit": "~0.1.2",
     "grunt-git-changedfiles": "0.0.2",
-    "grunt-rev": "~0.1.0"
+    "grunt-rev": "~0.1.0",
+    "grunt-cli": "~0.1.7",
+    "grunt-contrib-copy": "~0.4.1",
+    "grunt-jsmin-sourcemap": "~1.7.0"
+  },
+  "dependencies": {
+    "grunt-rm": "0.0.4"
   }
 }
