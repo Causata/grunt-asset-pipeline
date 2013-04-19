@@ -29,6 +29,7 @@
     "grunt-contrib-clean": "~0.4.1",
     "grunt-contrib-concat": "~0.2.0",
     "grunt-contrib-nodeunit": "~0.1.2",
-    "grunt-git-changedfiles": "0.0.2"
+    "grunt-git-changedfiles": "0.0.2",
+    "grunt-rev": "~0.1.0"
   }
 }
