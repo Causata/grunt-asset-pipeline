@@ -2,8 +2,6 @@
 
 > Manages a complex asset pipeline for your production pleasure
 
-# NOT WORKING YET
-
 ## Getting Started
 _If you haven't used [grunt][] before, be sure to check out the [Getting Started][] guide._
 
