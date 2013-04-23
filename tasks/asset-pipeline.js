@@ -33,6 +33,15 @@ module.exports = function (grunt) {
                     src = "build/asset_pipeline/${pathName}/${lastTask}/*".replace("${pathName}",pathName).replace("${lastTask}",lastTask);
                 conf.files[dest] = [src];
                 return conf;
+            },
+            compress : function(pathName,fileName,task,lastTask){
+                return {
+                    options: { mode:'gzip' },
+                    expand: true,
+                    cwd: 'build/asset_pipeline/'+pathName+'/'+lastTask+'/',
+                    src: ['*'],
+                    dest: 'build/asset_pipeline/'+pathName+'/compress/'
+                };
             }
 		};
 		
