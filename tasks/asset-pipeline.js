@@ -106,8 +106,6 @@ module.exports = function (grunt) {
                     _.clone(config.options[target],true)
                 );
 				
-                //conf.files[0].src[0] = conf.files[0].src[0].replace("${name}",escaped);
-				console.log( target.replace(":",".")+'.asset_pipeline_'+escaped,name,conf)
 				grunt.config.set( target.replace(":",".")+'.asset_pipeline_'+escaped, _.clone(conf,true) );
 				grunt.task.run( target+':asset_pipeline_'+escaped);
 				lastTarget = target;
