@@ -14,10 +14,26 @@ module.exports = function (grunt) {
 			usingChangedFiles = !!changedFiles;
 		
         var defaults = {
-			copy : {},
-			rev : { files: [ { src: ['build/asset_pipeline/${name}/rev/**/*'] } ] },
-			asset_pipeline_rev_copy : {},
-			concat : {}
+			copy : function(){ return {}; },
+			rev : function(pathName,fileName,task,lastTask){
+			    var conf = {files:{}},
+                src = 'build/asset_pipeline/${pathName}/rev/**/*'.replace("${pathName}",pathName);
+                return { files: [ { src:[src] } ] };
+			},
+			asset_pipeline_rev_copy : function(){ return {}; },
+			concat : function(){ return {}; },
+            uglify : function(pathName,fileName,task,lastTask){
+                var conf = {
+                        files:{},
+                        options: {
+                            sourceMap: 'build/asset_pipeline/'+pathName+'/sourcemaps/map.js'
+                        }
+                    },
+                    dest = "build/asset_pipeline/${pathName}/${task}/${fileName}".replace("${pathName}",pathName).replace("${task}",task).replace("${fileName}",fileName),
+                    src = "build/asset_pipeline/${pathName}/${lastTask}/*".replace("${pathName}",pathName).replace("${lastTask}",lastTask);
+                conf.files[dest] = [src];
+                return conf;
+            }
 		};
 		
 		// Gather up the input files and package them up
@@ -64,26 +80,34 @@ module.exports = function (grunt) {
 			
 			// Now add the intermediate targets based on special rules
 			// e.g. since Rev doesn't allow you to specify an output dir we have to hack around that 
-			var targets = group.targets || defaultTargets || [],
+			var targets = _.clone(group.targets || defaultTargets || []),
 				revIndex = targets.indexOf('rev');
 			
 			if ( revIndex > -1 ) {
-				targets.splice( revIndex, 0, { target:'copy', config: { files: [ { dest:"build/asset_pipeline/"+escaped+"/rev/", src:"**/*", cwd:"build/asset_pipeline/"+escaped+"/concat/", expand:true }]}} );
+				targets.splice( revIndex, 0, { target:'copy', config: { files: [ { dest:"build/asset_pipeline/"+escaped+"/rev/", src:"**/*", cwd:"build/asset_pipeline/"+escaped+"/${lastTarget}/", expand:true }]}} );
 			}
-			
+            
 			// Register the array of tasks with Grunt
 			targets.forEach(function(target){
 				if ( target instanceof Object ){
-					console.log('copy',target.config);
+                    if ( target.target == 'copy' ) target.config.files[0].cwd = target.config.files[0].cwd.replace("${lastTarget}",lastTarget);
 					var rand = Math.round(Math.random()*999999999);
 					grunt.config.set( target.target+'.r'+rand, _.clone(target.config,true) );
 					grunt.task.run( target.target+':r'+rand);
 					return;
 				}
+                
+                // allow overriding of configuration
 				conf = {};
-				_.extend( conf, _.clone(defaults[target],true), _.clone(grunt.config.data[target],true), _.clone(config.options[target],true) );
-				conf.files[0].src[0] = conf.files[0].src[0].replace("${name}",escaped);
-				console.log(target,name,conf)
+				_.extend(
+                    conf, 
+                    _.clone(defaults[target]( escaped, name, target, lastTarget ),true), 
+                    _.clone(grunt.config.data[target],true),
+                    _.clone(config.options[target],true)
+                );
+				
+                //conf.files[0].src[0] = conf.files[0].src[0].replace("${name}",escaped);
+				console.log( target.replace(":",".")+'.asset_pipeline_'+escaped,name,conf)
 				grunt.config.set( target.replace(":",".")+'.asset_pipeline_'+escaped, _.clone(conf,true) );
 				grunt.task.run( target+':asset_pipeline_'+escaped);
 				lastTarget = target;

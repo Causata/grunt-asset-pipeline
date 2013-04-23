@@ -17,12 +17,13 @@ module.exports = function(grunt) {
         },
 
 		asset_pipeline : {
-	        defaultTargets : ['rev'],
+	        defaultTargets : ['uglify','rev'],
 	        options : {
 	            outputDir : 'build/artifacts',
 				copy : {},
 				rev : {},
-				concat : {}
+				concat : {},
+                uglify : {}
 	        },
 	        artifacts : {
 	            "separateFiles" : {
@@ -41,7 +42,7 @@ module.exports = function(grunt) {
         nodeunit: {
             tests: ['test/*_test.js'],
         },
-        
+        uglify:{}
     });
 
     // Actually load this plugin's task(s).
@@ -55,6 +56,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-nodeunit');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-jsmin-sourcemap');
 
     // Whenever the "test" task is run, first clean the "tmp" dir, then run this

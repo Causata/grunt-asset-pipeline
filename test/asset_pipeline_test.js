@@ -1,4 +1,4 @@
-'use strict';
+
 var grunt = require('grunt'),
     fs = require('fs');
 
@@ -28,16 +28,19 @@ exports.asset_pipeline = {
         done();
     },
     concat: function(test) {
-
-        test.expect(2);
         var all = fs.readFileSync('build/asset_pipeline/custom_js/concat/custom.js','utf8');
-        
-        // var foo ='bar'; var lorem = 'ipsum'; foo = 'the unexpected';
         eval(all);
-        
-        test.equal( lorem, 'ipsum');
-        test.equal( foo, 'the unexpected');
-        
+        test.equal( foo, 'foobar');
+        test.done();
+    },
+    uglify:function(test){
+        var all = fs.readFileSync('build/asset_pipeline/custom_js/uglify/custom.js','utf8');
+        test.ok( all );
+        test.done();
+    },
+    rev: function(test){
+        var all = fs.readFileSync('build/asset_pipeline/custom_js/rev/19ac63ce.custom.js','utf8');
+        test.ok( all );
         test.done();
     }
 };
