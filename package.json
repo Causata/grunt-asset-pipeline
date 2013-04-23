@@ -24,6 +24,7 @@
   "license": "MIT",
   "readmeFilename": "README.md",
   "devDependencies": {
+<<<<<<< HEAD
     "grunt-cli": "~0.1.7",
     "grunt-contrib-nodeunit": "~0.1.2"
   },
@@ -34,5 +35,20 @@
     "grunt-contrib-copy": "~0.4.1",
     "grunt-contrib-clean": "~0.4.1",
     "grunt-rev": "~0.1.0"
+=======
+    "grunt": "~0.4.1",
+    "grunt-contrib-jshint": "~0.4.3",
+    "grunt-contrib-clean": "~0.4.1",
+    "grunt-contrib-concat": "~0.2.0",
+    "grunt-contrib-nodeunit": "~0.1.2",
+    "grunt-git-changedfiles": "0.0.2",
+    "grunt-rev": "~0.1.0",
+    "grunt-cli": "~0.1.7",
+    "grunt-contrib-copy": "~0.4.1",
+    "grunt-jsmin-sourcemap": "~1.7.0"
+  },
+  "dependencies": {
+    "grunt-rm": "0.0.4"
+>>>>>>> f83705a81becec07c8db02c779133d7778410e92
   }
 }

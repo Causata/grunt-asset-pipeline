@@ -4,32 +4,44 @@ module.exports = function(grunt) {
 
     // Project configuration.
     grunt.initConfig({
-
-        asset_pipeline : {
-
-            targets : ['rev','jsmin'],
-
-            options : {
-                outputDir : 'build/artifacts'
+        
+        jshint: {
+            all: [
+                'Gruntfile.js',
+                'tasks/*.js',
+                '<%= nodeunit.tests %>',
+            ],
+            options: {
+                jshintrc: '.jshintrc',
             },
-
-            artifacts : {
-                files : {
-                    "all.css" : [ "test/fixtures/*.css" ],
-                    "custom.js" : [
-                        "test/fixtures/some.js",
-                        "test/fixtures/other.js",
-                        "test/fixtures/later.js"
-                    ],
-                }
-            }
         },
+
+		asset_pipeline : {
+	        defaultTargets : ['rev'],
+	        options : {
+	            outputDir : 'build/artifacts',
+				copy : {},
+				rev : {},
+				concat : {}
+	        },
+	        artifacts : {
+	            "separateFiles" : {
+					files : [ { cwd:"test/fixtures/", src:"*.js", expand:true } ]
+				},
+                "custom.js" : { concat : [ "test/fixtures/**/*.js" ] },
+                "negated.js" : { concat : [
+                    "test/fixtures/a.js",
+                    "test/fixtures/**/*.js",
+                    "!test/fixtures/**/c.js"
+                ]}
+	        }
+	    },
         
         // Unit tests.
         nodeunit: {
             tests: ['test/*_test.js'],
         },
-
+        
     });
 
     // Actually load this plugin's task(s).
@@ -37,11 +49,13 @@ module.exports = function(grunt) {
 
     // These plugins provide necessary tasks.
     grunt.loadNpmTasks('grunt-rev');
-    grunt.loadNpmTasks('grunt-git-changedfiles');
     grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-rm');
     grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-nodeunit');
+    grunt.loadNpmTasks('grunt-jsmin-sourcemap');
 
     // Whenever the "test" task is run, first clean the "tmp" dir, then run this
     // plugin's task(s), then test the result.
