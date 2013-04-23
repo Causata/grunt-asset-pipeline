@@ -54,6 +54,10 @@ module.exports = function (grunt) {
 				if ( !foundMatch ) continue; // no match so skip this artifact
 			}
 			
+			// Clean up previous builds
+			grunt.config.set( 'clean.asset_pipeline_'+escaped, {src:["build/asset_pipeline/"+escaped]} );
+			grunt.task.run('clean:asset_pipeline_'+escaped);
+            
 			// Register the initial concat task with Grunt
 			grunt.config.set('concat.asset_pipeline_'+escaped, _.clone(conf,true) );
 			grunt.task.run('concat:asset_pipeline_'+escaped);

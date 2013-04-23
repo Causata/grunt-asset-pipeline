@@ -1,1 +1,0 @@
-var lorem = 'ipsum';

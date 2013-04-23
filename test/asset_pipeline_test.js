@@ -1,5 +1,6 @@
 'use strict';
-var grunt = require('grunt');
+var grunt = require('grunt'),
+    fs = require('fs');
 
 /*
     ======== A Handy Little Nodeunit Reference ========
@@ -29,7 +30,7 @@ exports.asset_pipeline = {
     concat: function(test) {
 
         test.expect(2);
-        var all = fs.readFileSync('build/asset_pipeline/concat/custom.js',{encoding:'utf8'});
+        var all = fs.readFileSync('build/asset_pipeline/custom_js/concat/custom.js','utf8');
         
         // var foo ='bar'; var lorem = 'ipsum'; foo = 'the unexpected';
         eval(all);
