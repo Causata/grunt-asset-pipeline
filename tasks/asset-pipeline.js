@@ -8,7 +8,7 @@ module.exports = function (grunt) {
         var done = this.async(),
             config = grunt.config.data,
             targets = config.splice_artifact_targets.targets
-            artifacts = grunt.config.get('git.changed.artifacts');
+            changedFiles = grunt.config.get('git.changed');
         
         // queue up each target for each artifact
         targets.forEach(function(target){
